@@ -7,9 +7,6 @@ import (
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-
-	"seaotterms-db/auth"
-	"seaotterms-db/discordbot"
 )
 
 type ConnectDBConfig struct {
@@ -56,20 +53,11 @@ func InitDsn(config ConnectDBConfig) (*DBModel, error) {
 		dbModel.modelsSet = "DiscordBot"
 	case strings.HasSuffix(config.DBName, "Auth"):
 		dbModel.modelsSet = "Auth"
+	case strings.HasSuffix(config.DBName, "Blog"):
+		dbModel.modelsSet = "Blog"
 	default:
 		dbModel.modelsSet = ""
 	}
 
 	return &dbModel, nil
-}
-
-func Migration(dbm *DBModel) {
-	switch dbm.modelsSet {
-	case "Auth":
-		dbm.DB.AutoMigrate(&auth.Token{})
-	case "DiscordBot":
-		dbm.DB.AutoMigrate(&discordbot.Member{})
-		dbm.DB.AutoMigrate(&discordbot.Log{})
-		dbm.DB.AutoMigrate(&discordbot.DedicatedChannel{})
-	}
 }
