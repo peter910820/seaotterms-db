@@ -73,3 +73,7 @@ func InitDsn(config ConnectDBConfig) (*DBModel, error) {
 
 	return &dbModel, nil
 }
+
+func (dbm *DBModel) GetDBModel() ModelSet {
+	return dbm.modelType
+}
