@@ -24,6 +24,7 @@ func Migration(dbm *DBModel) {
 		dbm.DB.AutoMigrate(&discordbot.DedicatedChannel{})
 	case AuthModel:
 		dbm.DB.AutoMigrate(&auth.Token{})
+		dbm.DB.AutoMigrate(&auth.User{})
 	case TeachModel:
 		dbm.DB.AutoMigrate(&teach.Series{})
 		dbm.DB.AutoMigrate(&teach.Article{})
