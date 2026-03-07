@@ -7,6 +7,7 @@ import (
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 type ModelSet string
@@ -39,7 +40,9 @@ func InitDsn(config ConnectDBConfig) (*DBModel, error) {
 		config.Port)
 
 	// get connect db variable
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Silent),
+	})
 	if err != nil {
 		// 連接資料庫失敗
 		return nil, err
