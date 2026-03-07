@@ -5,8 +5,6 @@ import (
 	"seaotterms-db/blog"
 	"seaotterms-db/discordbot"
 	"seaotterms-db/teach"
-
-	"github.com/sirupsen/logrus"
 )
 
 func Migration(dbm *DBModel) {
@@ -29,7 +27,5 @@ func Migration(dbm *DBModel) {
 		dbm.DB.AutoMigrate(&teach.Series{})
 		dbm.DB.AutoMigrate(&teach.Article{})
 		dbm.DB.AutoMigrate(&teach.Comment{})
-	default:
-		logrus.Warn("seaotterms-db: no matching migration found, skipping operation")
 	}
 }
