@@ -18,6 +18,7 @@ type (
 		Password string
 		DBName   string
 		Port     int
+		DBHost   string
 	}
 	DBModel struct {
 		DB        *gorm.DB
@@ -33,11 +34,16 @@ const (
 )
 
 func InitDsn(config ConnectDBConfig) (*DBModel, error) {
-	dsn := fmt.Sprintf("user=%s password=%s dbname=%s port=%d sslmode=disable",
+	if config.DBHost == "" {
+		config.DBHost = "localhost"
+	}
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable",
+		config.DBHost,
 		config.Owner,
 		config.Password,
 		config.DBName,
-		config.Port)
+		config.Port,
+	)
 
 	// get connect db variable
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
