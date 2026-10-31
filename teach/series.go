@@ -1,6 +1,19 @@
 package teach
 
-import "gorm.io/gorm"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
+
+func UpdateSeriesArticleAmount(db *gorm.DB, id uint, amount uint, updateTime time.Time) error {
+	return db.Model(&Series{}).Where("id = ?", id).
+		Select("article_amount", "updated_at").
+		Updates(struct {
+			ArticleAmount uint
+			UpdateTime    time.Time
+		}{amount, updateTime}).Error
+}
 
 // 用ID查詢Series
 //
