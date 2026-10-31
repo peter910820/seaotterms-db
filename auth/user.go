@@ -48,7 +48,7 @@ func CreateUser(db *gorm.DB, data *User) error {
 	return db.Create(data).Error
 }
 
-// updates only the password field of the user specified by id.
+// updates only the password field of the user specified by id
 func UpdateUserPassword(db *gorm.DB, id int, password string) error {
 	return db.Model(&User{}).Where("id = ?", id).
 		Select("password", "updated_at").
