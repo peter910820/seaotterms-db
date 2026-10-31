@@ -15,7 +15,7 @@ func GetServerTopMembersByExp(db *gorm.DB, serverID string, limit int) ([]Member
 	return memberData, nil
 }
 
-func QueryMembers(db *gorm.DB) ([]Member, error) {
+func QueryAllMembers(db *gorm.DB) ([]Member, error) {
 	var UserData []Member
 
 	err := db.Find(&UserData).Error
