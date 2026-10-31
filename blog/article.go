@@ -1,6 +1,20 @@
 package blog
 
-import "gorm.io/gorm"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
+
+// all article
+type Article struct {
+	ID        uint      `gorm:"primaryKey" json:"id"`
+	Title     string    `gorm:"NOT NULL" json:"title"`
+	Content   string    `gorm:"NOT NULL" json:"content"`
+	CreatedAt time.Time `gorm:"autoCreateTime" json:"createdAt"`
+	UpdatedAt time.Time `json:"updatedAt"`
+	Tags      []Tag     `gorm:"many2many:article_tags" json:"tags"`
+}
 
 // 查詢所有文章，並載入標籤
 func FindAllArticles(db *gorm.DB) ([]Article, error) {

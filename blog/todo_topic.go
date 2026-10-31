@@ -1,6 +1,18 @@
 package blog
 
-import "gorm.io/gorm"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
+
+// all todo topics of the blog
+type TodoTopic struct {
+	TopicName  string    `gorm:"primaryKey" json:"topicName"`
+	TopicOwner string    `gorm:"primaryKey; default:'root'" json:"topicOwner"`
+	UpdatedAt  time.Time `gorm:"autoCreateTime" json:"updatedAt"`
+	UpdateName string    `json:"updateName"`
+}
 
 // 查詢指定使用者的待辦主題，依時間由新到舊排序
 func FindTodoTopicsByOwner(db *gorm.DB, owner string) ([]TodoTopic, error) {

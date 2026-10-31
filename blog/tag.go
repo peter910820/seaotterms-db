@@ -1,6 +1,19 @@
 package blog
 
-import "gorm.io/gorm"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
+
+// all article tags
+// 不允許修改Name(PK)
+type Tag struct {
+	Name      string    `gorm:"primaryKey" json:"name"`
+	IconName  string    `json:"iconName"`
+	CreatedAt time.Time `gorm:"NOT NULL; autoCreateTime" json:"createdAt"`
+	UpdatedAt time.Time `json:"updatedAt"`
+}
 
 // 計算指定名稱的標籤數量
 func CountTags(db *gorm.DB, names []string) (int64, error) {

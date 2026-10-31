@@ -6,6 +6,17 @@ import (
 	"gorm.io/gorm"
 )
 
+type Series struct {
+	ID            uint      `gorm:"primaryKey" json:"id"`
+	Title         string    `gorm:"NOT NULL" json:"title"`
+	Image         string    `json:"image"`
+	ArticleAmount uint      `gorm:"NOT NULL; default:0" json:"articleAmount"`
+	CreatedAt     time.Time `gorm:"NOT NULL; autoCreateTime" json:"createdAt"`
+	CreatedName   string    `gorm:"NOT NULL" json:"createdName"`
+	UpdatedAt     time.Time `json:"updatedAt"`
+	UpdatedName   string    `json:"updatedName"`
+}
+
 func UpdateSeriesArticleAmount(db *gorm.DB, id uint, amount uint, updateTime time.Time) error {
 	return db.Model(&Series{}).Where("id = ?", id).
 		Select("article_amount", "updated_at").

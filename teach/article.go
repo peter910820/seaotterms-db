@@ -1,6 +1,24 @@
 package teach
 
-import "gorm.io/gorm"
+import (
+	"time"
+
+	"github.com/lib/pq"
+	"gorm.io/gorm"
+)
+
+type Article struct {
+	ID          uint           `gorm:"primaryKey" json:"id"`
+	Title       string         `gorm:"NOT NULL" json:"title"`
+	Image       string         `json:"image"`
+	SeriesID    uint           `gorm:"NOT NULL" json:"seriesId"` // series table id
+	Tags        pq.StringArray `gorm:"type:text[]" json:"tags"`
+	Content     string         `gorm:"NOT NULL" json:"content"`
+	CreatedAt   time.Time      `gorm:"NOT NULL; autoCreateTime" json:"createdAt"`
+	CreatedName string         `gorm:"NOT NULL" json:"createdName"`
+	UpdatedAt   time.Time      `json:"updatedAt"`
+	UpdatedName string         `json:"updatedName"`
+}
 
 // 用ID查詢Article
 //

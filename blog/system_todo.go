@@ -1,6 +1,25 @@
 package blog
 
-import "gorm.io/gorm"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
+
+// An updated todo of all my public systems
+type SystemTodo struct {
+	ID          uint       `gorm:"primaryKey" json:"id"`
+	SystemName  string     `gorm:"NOT NULL" json:"systemName"`
+	Title       string     `gorm:"NOT NULL" json:"title"`
+	Detail      string     `gorm:"NOT NULL" json:"detail"`
+	Status      uint       `gorm:"NOT NULL" json:"status"`
+	Deadline    *time.Time `json:"deadline"`
+	Urgency     uint       `gorm:"NOT NULL" json:"urgency"`
+	CreatedAt   time.Time  `gorm:"NOT NULL; autoCreateTime" json:"createdAt"`
+	CreatedName string     `gorm:"NOT NULL" json:"createdName"`
+	UpdatedAt   time.Time  `gorm:"autoUpdateTime" json:"updatedAt"`
+	UpdatedName string     `json:"updatedName"`
+}
 
 // 查詢所有系統待辦事項
 func FindAllSystemTodos(db *gorm.DB) ([]SystemTodo, error) {

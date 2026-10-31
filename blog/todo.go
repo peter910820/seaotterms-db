@@ -1,6 +1,24 @@
 package blog
 
-import "gorm.io/gorm"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
+
+// all user todos of the blog
+type Todo struct {
+	ID         uint       `gorm:"primaryKey" json:"id"`
+	Owner      string     `gorm:"NOT NULL" json:"owner"`
+	Topic      string     `gorm:"NOT NULL" json:"topic"`
+	Title      string     `gorm:"NOT NULL" json:"title"`
+	Status     uint       `gorm:"NOT NULL" json:"status"`
+	Deadline   *time.Time `json:"deadline"`
+	CreatedAt  time.Time  `gorm:"autoCreateTime" json:"createdAt"`
+	CreateName string     `gorm:"NOT NULL" json:"createName"`
+	UpdatedAt  time.Time  `gorm:"autoUpdateTime" json:"updatedAt"`
+	UpdateName string     `json:"updateName"`
+}
 
 // 查詢指定使用者的待辦事項
 func FindTodosByOwner(db *gorm.DB, owner string) ([]Todo, error) {
