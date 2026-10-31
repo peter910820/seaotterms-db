@@ -25,6 +25,18 @@ func CreateArticle(db *gorm.DB, data *Article) error {
 	return db.Create(data).Error
 }
 
+// 更新文章標題與內容
+func UpdateArticle(db *gorm.DB, article *Article) error {
+	return db.Model(article).
+		Select("title", "content", "updated_at").
+		Updates(article).Error
+}
+
+// 替換文章的標籤關聯
+func ReplaceArticleTags(db *gorm.DB, article *Article, tags []Tag) error {
+	return db.Model(article).Association("Tags").Replace(tags)
+}
+
 // 依 ID 查詢文章，並載入標籤
 func FindArticleByID(db *gorm.DB, id string) (*Article, error) {
 	var article Article
